@@ -1,6 +1,6 @@
 # Advent of Code 2021 Typescript solutions
 
-Typescript solutions to the (Advent of Code 2021)[https://adventofcode.com/2021] puzzles.
+Typescript solutions to the [Advent of Code 2021](https://adventofcode.com/2021) puzzles.
 
 ## Get answers
 1. install depedencies `$ npm install`
