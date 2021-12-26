@@ -239,6 +239,10 @@ class DigitDecoder {
         return this.outputDigits.filter(digit => [2,3,4,7].includes(digit.length)).length
     }
 
+    /**
+     * Convert each digitString to a number represented as string
+     * Join the strings to create a number.
+     */
     public getOutputDigits(): number {
         const digitsArr = Object.values(this.digitMap);
         const outputDigitsArr =  this.outputDigits.map(outputDigit => digitsArr.findIndex(digit => digit === outputDigit).toString());
