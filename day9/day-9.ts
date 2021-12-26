@@ -18,6 +18,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+const BASIN_EDGDE_HEIGHT = 9;
+
 class Point {
 
     public height: number;
@@ -77,8 +79,7 @@ class Point {
  * Bassins always start from a lowest point
  */
 class Bassin {
-    private basinEdgeHeight = 9;
-    private pointsMap: {[key:string]: Point} = {};
+    private pointIds = new Set<string>();
 
     constructor(startingPoint: Point) {
         this.getPointsInBasin(startingPoint);
@@ -97,7 +98,7 @@ class Bassin {
                 continue;
             }
             // Create an identifier for the point, so we can check if it's already been added
-            this.pointsMap[point.x + '-' + point.y] = point;
+            this.pointIds.add(point.x + '-' + point.y);
             const adjacentPointsInBasin = this.findNewBasinPoints(point);
             if (adjacentPointsInBasin.length > 0) {
                 queue.push(...adjacentPointsInBasin);
@@ -111,12 +112,12 @@ class Bassin {
     private findNewBasinPoints(point: Point): Point[] {
         return point.adjacentPoints.filter(adjacentPoint => {
             const adjacentPointID = adjacentPoint.x + '-' + adjacentPoint.y;
-            return adjacentPoint.height !== this.basinEdgeHeight && !(adjacentPointID in this.pointsMap)
+            return adjacentPoint.height !== BASIN_EDGDE_HEIGHT && !this.pointIds.has(adjacentPointID);
         });
     }
 
     public getSize() {
-        return Object.values(this.pointsMap).length;
+        return this.pointIds.size;
     }
 }
 
